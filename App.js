@@ -1,10 +1,16 @@
 import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
-
+import { StyleSheet, Text, View,SafeAreaView,ScrollView } from 'react-native';
+import Question from './components/Question';
+import {fakeData} from './data/fakeData'
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
+      <StatusBar style='light'/>
+      <SafeAreaView>
+        <ScrollView>
+        <Question text='Question 1' answer={{}}/>
+        </ScrollView>
+      </SafeAreaView>
       <StatusBar style="auto" />
     </View>
   );
