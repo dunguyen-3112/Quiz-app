@@ -2,7 +2,7 @@ import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity} from 
 import React, { useLayoutEffect } from 'react'
 import { auth } from '../firebase'
 import { Avatar } from '@rneui/base'
-import Question from './Question'
+import Question from '../screens/Question'
 
 const HomeScreen = ({navigation}) => {
   const signOutUser = ()=>{
