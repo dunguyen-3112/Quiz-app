@@ -1,9 +1,12 @@
 import { StyleSheet,View,Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import LoginScreen from './components/LoginScreen';
+import LoginScreen from './screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import RegisterScreen from './components/RegisterScreen';
-import HomeScreen from './components/HomeScreen'
+import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen'
+import AddQuestionScreen from './screens/AddQuestionScreen';
+import AddQuizScreen from './screens/AddQuizScreen';
+import QuizScreen from './screens/QuizScreen';
 
 const Stack = createNativeStackNavigator()
 const globalScreenOptions = {
@@ -18,6 +21,9 @@ export default function Anpmpp() {
        <Stack.Screen name='Login' component={LoginScreen}/>
        <Stack.Screen name='Register' component={RegisterScreen} />
        <Stack.Screen name='Home' component={HomeScreen} />
+       <Stack.Screen name='AddQuestion' component={AddQuestionScreen} />
+       <Stack.Screen name='AddQuiz' component={AddQuizScreen} />
+       <Stack.Screen name='Quiz' component={QuizScreen} />
      </Stack.Navigator>
    </NavigationContainer>
 

@@ -2,7 +2,7 @@ import { StyleSheet, View,KeyboardAvoidingView } from 'react-native'
 import React,{useLayoutEffect, useState} from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Button,Image, Input ,Text} from '@rneui/base'
-import { auth } from '../firebase'
+import { auth,db } from '../firebase'
 
 
 
@@ -24,10 +24,20 @@ const RegisterScreen = ({navigation}) => {
       .catch(error => alert(error.message))
     };
 
+    const createData = async()=>{
+      await db.collection('chats').add({
+        name:'abc'
+      })
+      .then(()=>{
+        navigation.goBack()
+      })
+      .catch(error=>alert(error))
+    }
+
     useLayoutEffect(()=>{
       navigation.setOptions({
         headerTitle:'Register',
-        headerBackTitle:"fdfdf",
+        headerBackTitle:"",
       })
     },[navigation])
 
