@@ -9,6 +9,6 @@
 
 
 - <h1>Phân chia công việc</h1>
-- <h1>1</h1> Config firebase, database (2 người)
-- <h1>2</h1> Design component Question, Answer... (2 người)
-- <h1>3</h1> Tổng hợp hoàn thiện (cả nhóm)
+- <h1>1 Config firebase, database (2 người)</h1>
+- <h1>2 Design component Question, Answer... (2 người)</h1>
+- <h1>3 Tổng hợp hoàn thiện (cả nhóm)</h1>
