@@ -1,7 +1,7 @@
 ### Quiz-app
 
 <img src='https://cdn.dribbble.com/users/4618569/screenshots/10364373/quizlet.jpg' wigth=700 height=400/>
-- Use NodeJS Latest LTS Version: 16.15.0
+- <h3>Use NodeJS Latest LTS Version:</h3><h1> 16.15.0</h1>
 - install expo: <h1>npm i -g expo-cli</h1>
 - npm install 
 - Connect android or use android studio
