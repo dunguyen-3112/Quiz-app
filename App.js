@@ -1,18 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View,SafeAreaView,ScrollView } from 'react-native';
-import Question from './components/Question';
-import {fakeData} from './data/fakeData'
-export default function App() {
+import { StyleSheet,View,Text } from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import LoginScreen from './screens/LoginScreen';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import RegisterScreen from './screens/RegisterScreen';
+import HomeScreen from './screens/HomeScreen'
+import AddQuestionScreen from './screens/AddQuestionScreen';
+import AddQuizScreen from './screens/AddQuizScreen';
+import QuizScreen from './screens/QuizScreen';
+import DownloadQuiz from './screens/DownloadQuiz';
+
+const Stack = createNativeStackNavigator()
+const globalScreenOptions = {
+  headerStyle:{backgroundColor:'#2C6BED'},
+  headerTitleStyle:{color:'while'},
+  headerTintColor:'white'
+}
+export default function Anpmpp() {
   return (
-    <View style={styles.container}>
-      <StatusBar style='light'/>
-      <SafeAreaView>
-        <ScrollView>
-        <Question text='Question 1' answer={{}}/>
-        </ScrollView>
-      </SafeAreaView>
-      <StatusBar style="auto" />
-    </View>
+   <NavigationContainer>
+     <Stack.Navigator screenOptions={globalScreenOptions}>
+       <Stack.Screen name='Login' component={LoginScreen}/>
+       <Stack.Screen name='Register' component={RegisterScreen} />
+       <Stack.Screen name='Home' component={HomeScreen} />
+       <Stack.Screen name='AddQuestion' component={AddQuestionScreen} />
+       <Stack.Screen name='AddQuiz' component={AddQuizScreen} />
+       <Stack.Screen name='DownloadQuiz' component={DownloadQuiz} />
+       <Stack.Screen name='Quiz' component={QuizScreen} />
+     </Stack.Navigator>
+   </NavigationContainer>
+
   );
 }
 
