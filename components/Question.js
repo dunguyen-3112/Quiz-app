@@ -6,24 +6,25 @@ import {db,auth} from '../firebase'
 const Question = (props) => {
 
   const [question,setQuestion] = useState(null)
-  const [text,setText] = useState('')
   const [currentOptionSelected,setCurrentOptionSelected] = useState('')
   useEffect(()=>{
     setCurrentOptionSelected('')
-     const unSubscribe = db.collection('users')
-                          .doc(auth.currentUser.uid)
-                          .collection('questions')
-                          .doc(props.data.id)
+     const unSubscribe = db.collection('questions')
+                          .doc(props.data)
                           .onSnapshot((snapshot)=>
                           setQuestion(snapshot.data())
                           )
       return unSubscribe
-    },[props.data.id])
+    },[props.data])
 
   const handlePress = (value)=>{
     setCurrentOptionSelected(value)
+    if(value == question.correctAnswer)
+      props.handlecorrectAnswer()
     props.handleDisable()
   }
+
+ 
 
  
 

@@ -14,11 +14,14 @@ const AddQuizScreen = ({navigation}) => {
 
     const HandleAddQuiz = ()=>{
     
-        db.collection('users').doc(auth.currentUser.uid).collection('quizs').add({
+        db.collection('quizs').add({
             questions:selectQuestions,
-            name:input
+            name:input,
+            uid:auth.currentUser.uid
+            //collection('users').doc(auth.currentUser.uid)
+
         })
-        .then(()=>navigation.goBack()).catch(error=>alert(error))
+        .then(()=>navigation.goBack())
         .catch(error=>alert(error))
         
     }
@@ -32,7 +35,8 @@ const AddQuizScreen = ({navigation}) => {
     }
 
     useEffect(()=>{
-        const unSubscribe = db.collection('users').doc(auth.currentUser.uid).collection('questions').onSnapshot((snapshot)=>
+        const unSubscribe = db.collection('questions').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
+        //.collection('users').doc(auth.currentUser.uid)
         setQuestions(
           snapshot.docs.map(doc=>({
           id:doc.id,

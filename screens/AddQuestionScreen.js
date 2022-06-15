@@ -23,10 +23,12 @@ const AddQuestionScreen = ({navigation}) => {
     }
     const createData = async()=>{
       if(correctAnswer.length !==0){
-        await db.collection('users').doc(auth.currentUser.uid).collection('questions').add({
+        await db.collection('questions').add({
+          //collection('users').doc(auth.currentUser.uid).
           question,
           answers,
-          correctAnswer
+          correctAnswer,
+          uid:auth.currentUser.uid
         })
         .then(()=>{
           navigation.goBack()

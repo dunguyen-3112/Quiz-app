@@ -1,8 +1,7 @@
 import { StyleSheet, View,ScrollView, SafeAreaView, StatusBar ,TouchableOpacity,Text,Image} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { db,auth } from '../firebase'
-import {ListItem} from '@rneui/themed'
-import Answer from '../components/Answer'
+import * as firebase from 'firebase'
 import Question from '../components/Question'
 
 const QuizScreen = ({navigation,route}) => {
@@ -10,29 +9,43 @@ const QuizScreen = ({navigation,route}) => {
     const [questions,setQuestions] = useState([])
     const [isDisabled,setIsDisabled] = useState(true)
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState(0)
+    const [correctAnswerIndex,setCorrectAnswerIndex] = useState(0)
 
     const handleNext = ()=>{
       if(currentQuestionIndex<questions.length-1)
         setCurrentQuestionIndex(currentQuestionIndex+1)
         setIsDisabled(true)
-
-
+      if(currentQuestionIndex+1===questions.length){
+        alert('Bạn làm đúng '+correctAnswerIndex+' câu.')
+        db.collection('quizs').doc(route.params.id).collection('result').add({
+          uid:auth.currentUser.uid,
+          correctAnswerIndex
+      })
+      .then(()=>navigation.goBack()).catch(error=>alert(error))
+      .catch(error=>alert(error))
+        navigation.replace("Home")
+      }
     }
     const handleNextDisabled = ()=>{
         setIsDisabled(false)
     
     }
+
+    const handlecorrectAnswer = ()=>{
+      setCorrectAnswerIndex(correctAnswerIndex+1)
+    }
     useEffect(()=>{
-      const unSubscribe = db.collection('users').doc(auth.currentUser.uid).collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
+      const unSubscribe = db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
+      //collection('users').doc(auth.currentUser.uid).
       setQuestions(
           snapshot.data().questions.map(doc=>(({
-            data:doc
+            data:doc.id
           } )))
         )
       
       )
       return unSubscribe
-    },[])
+    },[currentQuestionIndex])
   return (
     <SafeAreaView style={{
       flex: 1,
@@ -44,7 +57,7 @@ const QuizScreen = ({navigation,route}) => {
       <StatusBar styles='light'/>
       {questions[currentQuestionIndex]?<View>
         <Text style={{fontSize:30,color:'#00BFFF',fontWeight:'800',padding:10}}>{currentQuestionIndex+1}/{questions.length}</Text>
-       <Question data={questions[currentQuestionIndex].data} handleDisable={handleNextDisabled}/>
+       <Question data={questions[currentQuestionIndex].data} handleDisable={handleNextDisabled} handlecorrectAnswer = {handlecorrectAnswer}/>
       </View>
         :<Text>Đang tải dữ liệu!</Text>}
        <View style={{flexDirection:'row' ,justifyContent:'space-between',marginHorizontal:40,marginVertical:40}}>
@@ -54,7 +67,7 @@ const QuizScreen = ({navigation,route}) => {
                 style={{
                     marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
                 }}>
-                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Send':'Next'}</Text>
                 </TouchableOpacity>
        </View>
        <Image
