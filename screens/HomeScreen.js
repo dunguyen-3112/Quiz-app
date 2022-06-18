@@ -6,6 +6,7 @@ import * as firebase from 'firebase'
 import {db,auth} from '../firebase'
 import CustomListItem from '../components/CustomListItem'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
+import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
 
 const HomeScreen = ({navigation}) => {
 
@@ -35,10 +36,9 @@ const HomeScreen = ({navigation}) => {
     }
   }
   storeData({x:1})
-  console.log(getData())
   useEffect(()=>{
    
-      const unSubscribe = db.collection('users').doc(auth.currentUser.uid).collection('quizs').onSnapshot((snapshot)=>
+    const unSubscribe = db.collection('quizs').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
         setQuizs(
           snapshot.docs.map(doc=>({
           id:doc.id,
@@ -76,10 +76,10 @@ const HomeScreen = ({navigation}) => {
               <AntDesign name="download" size={24} color="black"/>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')}>
-              <AntDesign name="addfile" size={30} color="black"/>
+              <FontAwesome5 name={'brain'} size={24} solid />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')}>
-              <SimpleLineIcons name="pencil" size={30} color="black"/>
+              <AntDesign name="question" size={24} color="black"/>
             </TouchableOpacity>
           </View>
     )

@@ -15,10 +15,13 @@ const AddQuizScreen = ({navigation}) => {
 
     const HandleAddQuiz = ()=>{
     
-        db.collection('users').doc(auth.currentUser.uid).collection('quizs').add({
+        db.collection('quizs').add({
             questions:selectQuestions,
             name:input1,
-            description: input2
+            description: input2,
+            uid:auth.currentUser.uid
+            //collection('users').doc(auth.currentUser.uid)
+
         })
         .then(()=>navigation.goBack()).catch(error=>alert(error))
         .catch(error=>alert(error))

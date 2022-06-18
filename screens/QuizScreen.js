@@ -1,8 +1,7 @@
 import { StyleSheet, View,ScrollView, SafeAreaView, StatusBar ,TouchableOpacity,Text,Image} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { db,auth } from '../firebase'
-import {ListItem} from '@rneui/themed'
-import Answer from '../components/Answer'
+import * as firebase from 'firebase'
 import Question from '../components/Question'
 
 const QuizScreen = ({navigation,route}) => {
@@ -10,23 +9,29 @@ const QuizScreen = ({navigation,route}) => {
     const [questions,setQuestions] = useState([])
     const [isDisabled,setIsDisabled] = useState(true)
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState(0)
+    const [correctAnswerIndex,setCorrectAnswerIndex] = useState(0)
 
     const handleNext = ()=>{
-      if (currentQuestionIndex<questions.length-1) {
+      if(currentQuestionIndex<questions.length-1)
         setCurrentQuestionIndex(currentQuestionIndex+1)
         setIsDisabled(true)
-      } else {
-        navigation.goBack()
+      if(currentQuestionIndex+1===questions.length){
+        alert('Bạn làm đúng '+correctAnswerIndex+' câu.')
+        db.collection('quizs').doc(route.params.id).collection('result').add({
+          uid:auth.currentUser.uid,
+          correctAnswerIndex
+      })
+      .then(()=>navigation.goBack()).catch(error=>alert(error))
+      .catch(error=>alert(error))
+        navigation.replace("Home")
       }
-
-
     }
     const handleNextDisabled = ()=>{
         setIsDisabled(false)
     
     }
     useEffect(()=>{
-      const unSubscribe = db.collection('users').doc(auth.currentUser.uid).collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
+      const unSubscribe = db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
       setQuestions(
           snapshot.data().questions.map(doc=>(({
             data:doc

@@ -45,7 +45,7 @@ const AddQuestionScreen = ({navigation}) => {
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='light'/>
-      <Text h3>Create a question</Text>
+      <Text h3 style={{marginBottom:50}}>Create a question</Text>
       <View style={styles.inputContainer}>
           <Input 
             placeholder='Type Question' 
@@ -92,6 +92,7 @@ const styles = StyleSheet.create({
     container:{
         flex:1,
         alignItems:'center',
+        justifyContent:'center',
         padding:10,
         backgroundColor:'white'
     },

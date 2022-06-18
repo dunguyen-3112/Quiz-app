@@ -1,10 +1,9 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React from 'react'
-import { Avatar, ListItem } from "@rneui/themed";
-import colors from 'webpack-dev-server/lib/utils/colors';
 import { Button } from '@rneui/base';
 import {auth,db} from '../firebase'
-import Question from './Question';
+import { StyleSheet, Text, View,TouchableOpacity} from 'react-native'
+import React from 'react'
+import { Avatar, ListItem } from "@rneui/themed";
+import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
 
 
 const CustomListItem = ({id,name, description, questions,navigation}) => {
@@ -14,7 +13,7 @@ const CustomListItem = ({id,name, description, questions,navigation}) => {
   }
   
   const handlePressUp = ()=>{
-    db.collection('ShareQuiz').add({
+    db.collection('Quiz').add({
       description:description,
       name:name,
       questions:questions
@@ -44,6 +43,9 @@ const CustomListItem = ({id,name, description, questions,navigation}) => {
           fontWeight:"200",
           marginStart:10, 
           fontSize:15}}>{description}</ListItem.Title>
+        <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Result',{id:id})} style={{marginStart:'auto',marginEnd:20,alignSelf:'center'}}>
+              <AntDesign name="eye" size={24} color="blue"/>
+          </TouchableOpacity>
       </ListItem.Content>
       <Button 
         title='Up'

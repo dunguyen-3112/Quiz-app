@@ -1,13 +1,15 @@
 import { StyleSheet,View,Text } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer, StackRouter } from '@react-navigation/native';
 import LoginScreen from './screens/LoginScreen';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen'
 import AddQuestionScreen from './screens/AddQuestionScreen';
 import AddQuizScreen from './screens/AddQuizScreen';
+import Result from './screens/Result';
 import QuizScreen from './screens/QuizScreen';
 import DownloadQuiz from './screens/DownloadQuiz';
+import firebase from 'firebase';
 
 const Stack = createNativeStackNavigator()
 const globalScreenOptions = {
@@ -26,6 +28,7 @@ export default function Anpmpp() {
        <Stack.Screen name='AddQuiz' component={AddQuizScreen} />
        <Stack.Screen name='DownloadQuiz' component={DownloadQuiz} />
        <Stack.Screen name='Quiz' component={QuizScreen} />
+       <Stack.Screen name='Result' component={Result}/>
      </Stack.Navigator>
    </NavigationContainer>
 

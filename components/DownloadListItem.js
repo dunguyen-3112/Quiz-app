@@ -7,11 +7,6 @@ import {auth,db} from '../firebase'
 
 
 const DownloadListItem = ({id,name, description, questions,navigation}) => {
-
-
-    const handlePress = ()=>{
-      navigation.navigate('Quiz',{id:id})
-    }
     
     const handlePressDown = ()=>{
         db.collection('users').doc(auth.currentUser.uid).collection('quizs').add({
@@ -22,7 +17,7 @@ const DownloadListItem = ({id,name, description, questions,navigation}) => {
       alert('Download thành công')
     }
   return (
-    <ListItem  bottomDivider onPress={handlePress}>
+    <ListItem  bottomDivider>
       <ListItem.Content style={{
         borderRadius:5,
         flexDirection:'row',
