@@ -9,13 +9,12 @@ const Question = (props) => {
   const [currentOptionSelected,setCurrentOptionSelected] = useState('')
   useEffect(()=>{
     setCurrentOptionSelected('')
-    const unSubscribe = db.collection('questions')
-                         .doc(props.data)
-                         .onSnapshot((snapshot)=>
-                         setQuestion(snapshot.data())
-                         )
-     return unSubscribe
-   },[props.data])
+     const unSubscribe = db.collection('questions')
+                          .doc(props.data)
+                          .onSnapshot((snapshot)=>
+                          setQuestion(snapshot.data()))
+      return unSubscribe
+    },[props.data])
 
   const handlePress = (value)=>{
     setCurrentOptionSelected(value)
@@ -23,6 +22,10 @@ const Question = (props) => {
       props.handlecorrectAnswer()
     props.handleDisable()
   }
+
+ 
+
+ 
 
   return (
     <SafeAreaView style={{marginStart:10,width:350}}>
@@ -44,14 +47,16 @@ const Question = (props) => {
       </View>
         </View>
         :<Text>Đang tải dữ liệu!</Text>
+       
       }
+      
     </SafeAreaView>
   )
 }
 
 const style = StyleSheet.create({
   question:{
-    color: '#ffffff',
+    color: '#FFFFFF',
     fontSize: 30
   },
   

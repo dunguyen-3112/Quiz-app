@@ -6,8 +6,8 @@ import RegisterScreen from './screens/RegisterScreen';
 import HomeScreen from './screens/HomeScreen'
 import AddQuestionScreen from './screens/AddQuestionScreen';
 import AddQuizScreen from './screens/AddQuizScreen';
-import Result from './screens/Result';
 import QuizScreen from './screens/QuizScreen';
+import Result from './screens/Result';
 import DownloadQuiz from './screens/DownloadQuiz';
 import firebase from 'firebase';
 
@@ -26,8 +26,8 @@ export default function Anpmpp() {
        <Stack.Screen name='Home' component={HomeScreen} />
        <Stack.Screen name='AddQuestion' component={AddQuestionScreen} />
        <Stack.Screen name='AddQuiz' component={AddQuizScreen} />
-       <Stack.Screen name='DownloadQuiz' component={DownloadQuiz} />
        <Stack.Screen name='Quiz' component={QuizScreen} />
+       <Stack.Screen name='DownloadQuiz' component={DownloadQuiz} />
        <Stack.Screen name='Result' component={Result}/>
      </Stack.Navigator>
    </NavigationContainer>

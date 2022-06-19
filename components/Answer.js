@@ -34,13 +34,10 @@ const Answer = (props) => {
     }})
   return (
     <View>
-      {
-        console.log(props)
-      }
+  
         <TouchableOpacity activeOpacity={0.5} onPress={handlePress} onLongPress={handleLongPress}>
             <Text style={style.answer}> {props.text}</Text>
         </TouchableOpacity>
-        {console.log(props.currentOptionSelected)}
     </View>
   )
 }

@@ -38,7 +38,8 @@ const HomeScreen = ({navigation}) => {
   storeData({x:1})
   useEffect(()=>{
    
-    const unSubscribe = db.collection('quizs').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
+      const unSubscribe = db.collection('quizs').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
+      //.collection('users').doc(auth.currentUser.uid)
         setQuizs(
           snapshot.docs.map(doc=>({
           id:doc.id,
@@ -68,7 +69,7 @@ const HomeScreen = ({navigation}) => {
           style={{
             flexDirection:'row',
             justifyContent:'space-between',
-            width:140,
+            width:120,
             marginRight:20,
           }}
           >
@@ -76,10 +77,11 @@ const HomeScreen = ({navigation}) => {
               <AntDesign name="download" size={24} color="black"/>
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')}>
-              <FontAwesome5 name={'brain'} size={24} solid />
+            <FontAwesome5 name={'brain'} size={24} solid />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')}>
               <AntDesign name="question" size={24} color="black"/>
+             
             </TouchableOpacity>
           </View>
     )
@@ -89,16 +91,15 @@ const HomeScreen = ({navigation}) => {
     <SafeAreaView>
      <ScrollView>
        {
-          quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
-          quizs.map(({id,data:{name,description,questions}})=>(
-            <CustomListItem
-              key={id}
-              id={id}
-              name={name}
-              description={description}
-              questions={questions}
-              navigation={navigation}
-            />           
+         quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
+         quizs.map(({id,data:{name, description}})=>(
+          <CustomListItem
+            key={id}
+            id={id}
+            name={name}
+            description={description}
+            navigation={navigation}
+          />
          ))
        }
      </ScrollView>

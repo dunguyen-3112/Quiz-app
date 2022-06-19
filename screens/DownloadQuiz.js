@@ -20,7 +20,7 @@ const DownloadQuiz = ({navigation}) => {
   const storeData = async (value) => {
     try {
       const jsonValue = JSON.stringify(value)
-      await AsyncStorage.setItem('@ShareQuiz', jsonValue)
+      await AsyncStorage.setItem('@quizs', jsonValue)
     } catch (e) {
       // saving error
     }
@@ -28,7 +28,7 @@ const DownloadQuiz = ({navigation}) => {
 
   const getData = async () => {
     try {
-      const jsonValue = await AsyncStorage.getItem('@ShareQuiz')
+      const jsonValue = await AsyncStorage.getItem('@quizs')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
       // error reading value
@@ -37,8 +37,7 @@ const DownloadQuiz = ({navigation}) => {
   storeData({x:1})
   console.log(getData())
   useEffect(()=>{
-   
-      const unSubscribe = db.collection('ShareQuiz').onSnapshot((snapshot)=>
+      const unSubscribe = db.collection('quizs').where('uid','!=',auth.currentUser.uid).onSnapshot((snapshot)=>
         setShareQuiz(
           snapshot.docs.map(doc=>({
           id:doc.id,
@@ -57,9 +56,9 @@ const DownloadQuiz = ({navigation}) => {
       headerTitleStyle:{color:'#000'},
       headerTintColor:"black",
       headerLeft:()=>(
-        <View style={{marginLeft:20}}>
-          <TouchableOpacity onPress={signOutUser} activeOpacity={0.5}>
-            <Avatar rounded source={{uri:auth?.currentUser?.photoURL}}/>
+        <View style={{lexDirection:"row",marginLeft:0, justifyContent:'space-between',width:60}}>
+          <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.goBack()}>
+            <AntDesign name="back" size={24} color="black"/>
           </TouchableOpacity>
         </View>
       )

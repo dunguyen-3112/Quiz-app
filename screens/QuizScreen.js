@@ -30,56 +30,58 @@ const QuizScreen = ({navigation,route}) => {
         setIsDisabled(false)
     
     }
+
+    const handlecorrectAnswer = ()=>{
+      setCorrectAnswerIndex(correctAnswerIndex+1)
+    }
     useEffect(()=>{
       const unSubscribe = db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
+      //collection('users').doc(auth.currentUser.uid).
       setQuestions(
           snapshot.data().questions.map(doc=>(({
-            data:doc
+            data:doc.id
           } )))
         )
       
       )
       return unSubscribe
-    },[])
+    },[currentQuestionIndex])
   return (
     <SafeAreaView style={{
       flex: 1,
                paddingVertical: 40,
                paddingHorizontal: 16,
-               backgroundColor: '#00c1c1',
+               backgroundColor: '#252C4A',
                position:'relative'
     }}>
       <StatusBar styles='light'/>
       {questions[currentQuestionIndex]?<View>
-        <Text style={{fontSize:30,color:'#ff0000',fontWeight:'800',padding:10}}>{currentQuestionIndex+1}/{questions.length}</Text>
-       <Question data={questions[currentQuestionIndex].data} handleDisable={handleNextDisabled}/>
+        <Text style={{fontSize:30,color:'#00BFFF',fontWeight:'800',padding:10}}>{currentQuestionIndex+1}/{questions.length}</Text>
+        <Question data={questions[currentQuestionIndex].data} handleDisable={handleNextDisabled} handlecorrectAnswer = {handlecorrectAnswer}/>
       </View>
-        :<Text>Đang tải dữ liệu!</Text>}
-       <View style={{flexDirection:'row' ,justifyContent:'space-between',marginHorizontal:40,marginVertical:40}}>
-       <TouchableOpacity
+      :<Text>Đang tải dữ liệu!</Text>}
+      <View style={{flexDirection:'row' ,justifyContent:'space-between',marginHorizontal:40,marginVertical:40}}>
+        <TouchableOpacity
           onPress={handleNext}
           disabled = {isDisabled}
-          style={{
-            marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
-          }}>
-          <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Next</Text>
+          style={{marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,}}>
+          <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Send':'Next'}</Text>
         </TouchableOpacity>
-       </View>
-       <Image
-          source={require('../assets/image/DottedBG.png')}
-          style={{
-              width: 300,
-              height: 130,
-              zIndex: -1,
-              position: 'absolute',
-              bottom: 0,
-              left: 0,
-              right: 0,
-              opacity: 0.5
-          }}
-          resizeMode={'contain'}
-          />
-
+      </View>
+      <Image
+        source={require('../assets/image/DottedBG.png')}
+        style={{
+            width: 300,
+            height: 130,
+            zIndex: -1,
+            position: 'absolute',
+            bottom: 0,
+            left: 0,
+            right: 0,
+            opacity: 0.5
+        }}
+        resizeMode={'contain'}
+      />
     </SafeAreaView>
   )
 }

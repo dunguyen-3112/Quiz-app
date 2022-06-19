@@ -6,16 +6,19 @@ import { Button } from '@rneui/base';
 import {auth,db} from '../firebase'
 
 
-const DownloadListItem = ({id,name, description, questions,navigation}) => {
+const DownloadListItem = ({name, description, questions}) => {
     
     const handlePressDown = ()=>{
-        db.collection('users').doc(auth.currentUser.uid).collection('quizs').add({
+        db.collection('quizs').add({
         description:description,
         name:name,
         questions:questions,
+        uid:auth.currentUser.uid
       })
       alert('Download thành công')
     }
+
+
   return (
     <ListItem  bottomDivider>
       <ListItem.Content style={{

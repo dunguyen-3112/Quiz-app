@@ -8,7 +8,7 @@ import { ListItem } from '@rneui/themed'
 
 const AddQuizScreen = ({navigation}) => {
 
-    const [input1,setInput1] = useState("")
+    const [input,setInput] = useState("")
     const [input2,setInput2] = useState("")
     const [questions,setQuestions] = useState([])
     const [selectQuestions,setSelectQuestions] = useState([])
@@ -17,13 +17,13 @@ const AddQuizScreen = ({navigation}) => {
     
         db.collection('quizs').add({
             questions:selectQuestions,
-            name:input1,
+            name:input,
             description: input2,
             uid:auth.currentUser.uid
             //collection('users').doc(auth.currentUser.uid)
 
         })
-        .then(()=>navigation.goBack()).catch(error=>alert(error))
+        .then(()=>navigation.goBack())
         .catch(error=>alert(error))
         
     }
@@ -37,7 +37,8 @@ const AddQuizScreen = ({navigation}) => {
     }
 
     useEffect(()=>{
-        const unSubscribe = db.collection('users').doc(auth.currentUser.uid).collection('questions').onSnapshot((snapshot)=>
+        const unSubscribe = db.collection('questions').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
+        //.collection('users').doc(auth.currentUser.uid)
         setQuestions(
           snapshot.docs.map(doc=>({
           id:doc.id,
@@ -53,8 +54,8 @@ const AddQuizScreen = ({navigation}) => {
         <KeyboardAvoidingView behavior='height' keyboardVerticalOffset={90}>
             <Input
                 placeholder='Enter Name Quiz'
-                value={input1}
-                onChangeText={text=>setInput1(text)}
+                value={input}
+                onChangeText={text=>setInput(text)}
             />
             <Input
                 placeholder='Enter Description'
