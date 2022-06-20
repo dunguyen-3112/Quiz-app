@@ -8,7 +8,6 @@ import AddQuestionScreen from './screens/AddQuestionScreen';
 import AddQuizScreen from './screens/AddQuizScreen';
 import QuizScreen from './screens/QuizScreen';
 import Result from './screens/Result';
-import Atest from './screens/Atest'
 import JoinQuiz from './screens/JoinQuiz'
 
 const Stack = createNativeStackNavigator()
