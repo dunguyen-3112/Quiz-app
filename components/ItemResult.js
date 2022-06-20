@@ -5,7 +5,7 @@ import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
 import { db,auth } from '../firebase'
 
 
-const ItemResult = ({id,correctAnswerIndex}) => {
+const ItemResult = ({data}) => {
     const [item,setItem] = useState(null)
 
     useEffect(()=>{
@@ -17,7 +17,6 @@ const ItemResult = ({id,correctAnswerIndex}) => {
           doc.data()
           ))
         )
-        
         )
         return unSubscribe
       },[])
@@ -29,9 +28,12 @@ const ItemResult = ({id,correctAnswerIndex}) => {
      <Avatar
             size={56}
             rounded
-            source={{ uri: 'https://cdn.pixabay.com/photo/2014/09/17/20/03/profile-449912__340.jpg'}}
+            source={{uri:data.photoURL}}
         />
-        <ListItem.Title style={{fontWeight:"800",alignSelf:'center',marginStart:20, fontSize:20}}><Text>{correctAnswerIndex}</Text></ListItem.Title>
+        <ListItem.Title style={{fontWeight:"800",alignSelf:'center',marginStart:20, fontSize:20}}>
+          <Text>{data.displayName}</Text>
+          <Text style={{backgroundColor:'#D8BFD8'}}>{data.correctAnswerIndex}</Text>
+        </ListItem.Title>
 
      </ListItem.Content>
 

@@ -4,20 +4,22 @@ import { StatusBar } from 'expo-status-bar'
 import { Button, Input } from '@rneui/base'
 import {auth,db} from '../firebase'
 import { ListItem } from '@rneui/themed'
+import uuid from 'react-native-uuid';
 
 const AddQuizScreen = ({navigation}) => {
 
     const [input,setInput] = useState("")
     const [questions,setQuestions] = useState([])
     const [selectQuestions,setSelectQuestions] = useState([])
+    const [isDisabled,setIsDisabled] = useState(true)
 
     const HandleAddQuiz = ()=>{
     
         db.collection('quizs').add({
             questions:selectQuestions,
             name:input,
-            uid:auth.currentUser.uid
-            //collection('users').doc(auth.currentUser.uid)
+            uid:auth.currentUser.uid,
+            idShare:uuid.v4()
 
         })
         .then(()=>navigation.goBack())
@@ -30,12 +32,14 @@ const AddQuizScreen = ({navigation}) => {
         arr.splice(index, 1);
         setQuestions(arr)
         setSelectQuestions([...selectQuestions,{id}])
-        console.log(selectQuestions)
     }
+    useEffect(()=>{
+        if (selectQuestions.length>0) setIsDisabled(false)
+        else setIsDisabled(true)
+      },[selectQuestions])
 
     useEffect(()=>{
         const unSubscribe = db.collection('questions').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
-        //.collection('users').doc(auth.currentUser.uid)
         setQuestions(
           snapshot.docs.map(doc=>({
           id:doc.id,
@@ -67,10 +71,14 @@ const AddQuizScreen = ({navigation}) => {
                     ))
                 }
             </ScrollView>
-            <Button
-                title='Add'
+            <TouchableOpacity
                 onPress={HandleAddQuiz}
-            />
+                disabled = {isDisabled}
+                style={{
+                    marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
+                }}>
+                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Add</Text>
+                </TouchableOpacity>
         </KeyboardAvoidingView>
     </SafeAreaView>
   )
@@ -78,4 +86,6 @@ const AddQuizScreen = ({navigation}) => {
 
 export default AddQuizScreen
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({
+    
+})

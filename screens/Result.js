@@ -9,26 +9,26 @@ const Result = ({navigation,route}) => {
     const [result,setResult] = useState([])
 
     useEffect(()=>{
-
       const unSubscribe = db.collection('quizs').doc(route.params.id).collection('result').onSnapshot((snapshot)=>
 
       setResult(
-        snapshot.docs.map(doc=>({uid:doc.data().uid,correctAnswerIndex:doc.data().correctAnswerIndex}
-        
-        ))
+        snapshot.docs.map(doc=>(doc.data()))
       )
       
       )
+      
       return unSubscribe
     },[])
   return (
     <SafeAreaView>
+      {console.log(result)}
     <ScrollView>
       {
         result.length===0?<Text>Đang tải dữ liệu</Text>:<View>
         {
             result.map((item)=>(
-              <ItemResult id={item.uid} correctAnswerIndex={item.correctAnswerIndex}/>
+              <ItemResult data={item}/>
+
             ))
             
         }

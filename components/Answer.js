@@ -1,15 +1,19 @@
 import { StyleSheet,View, Text,TouchableOpacity } from 'react-native'
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
 const Answer = (props) => {
+  const [isDisable,setIsDisabled] = useState(false)
   const handlePress = ()=>{
+
     props.onPress(props.text)
   }
   const handleLongPress =()=>{
     props.onLongPress()
   }
 
+
   const style = StyleSheet.create({
+
     answer:{
       fontSize:20,
       borderWidth: 3, 
@@ -35,7 +39,7 @@ const Answer = (props) => {
   return (
     <View>
   
-        <TouchableOpacity activeOpacity={0.5} onPress={handlePress} onLongPress={handleLongPress}>
+        <TouchableOpacity activeOpacity={0.5} onPress={handlePress} onLongPress={handleLongPress} disabled={isDisable}>
             <Text style={style.answer}> {props.text}</Text>
         </TouchableOpacity>
     </View>

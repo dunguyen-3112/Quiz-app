@@ -19,7 +19,9 @@ const QuizScreen = ({navigation,route}) => {
         alert('Bạn làm đúng '+correctAnswerIndex+' câu.')
         db.collection('quizs').doc(route.params.id).collection('result').add({
           uid:auth.currentUser.uid,
-          correctAnswerIndex
+          correctAnswerIndex,
+          displayName:auth.currentUser.displayName,
+          photoURL:auth.currentUser.photoURL
       })
       .then(()=>navigation.goBack()).catch(error=>alert(error))
       .catch(error=>alert(error))

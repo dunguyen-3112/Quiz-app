@@ -1,10 +1,14 @@
-import { StyleSheet, Text, View,TouchableOpacity} from 'react-native'
+import { StyleSheet, Text, View,TouchableOpacity,Clipboard} from 'react-native'
 import React from 'react'
 import { Avatar, ListItem } from "@rneui/themed";
 import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
 
 
-const CustomListItem = ({id,name,navigation}) => {
+const CustomListItem = ({id,name,idShare,navigation}) => {
+
+  const copyToClipboard = () => {
+    Clipboard.setString(idShare)
+  }
 
     const handlePress = ()=>{
         navigation.navigate('Quiz',{id:id})
@@ -18,9 +22,12 @@ const CustomListItem = ({id,name,navigation}) => {
             source={{ uri: 'https://cdn.pixabay.com/photo/2014/09/17/20/03/profile-449912__340.jpg'}}
         />
         <ListItem.Title style={{fontWeight:"800",alignSelf:'center',marginStart:20, fontSize:20}}>{name}</ListItem.Title>
-        <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Result',{id:id})} style={{marginStart:'auto',marginEnd:20,alignSelf:'center'}}>
+        <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Result',{id:id})} style={{marginStart:'auto',marginEnd:30,alignSelf:'center'}}>
               <AntDesign name="eye" size={24} color="blue"/>
           </TouchableOpacity>
+          <TouchableOpacity  activeOpacity={0.5} onPress={() => copyToClipboard()} style={{marginEnd:20,alignSelf:'center'}}>
+          <AntDesign name="sharealt" size={24} color="blue"/>
+        </TouchableOpacity>
      </ListItem.Content>
 
     </ListItem>

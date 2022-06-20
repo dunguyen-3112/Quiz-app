@@ -33,6 +33,7 @@ const Question = (props) => {
       {
         question?
         <View>
+          
           <Text style={style.question}>{question.question}</Text>
       <View>
           {
@@ -40,7 +41,7 @@ const Question = (props) => {
             question.answers.map((item,index)=>{
                 return (
                  
-                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} key={index} />
+                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} onLongPress={{}} key={index} />
                       
                   )
               })

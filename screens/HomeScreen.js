@@ -1,11 +1,13 @@
 import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Avatar } from '@rneui/base'
+import { Avatar, Button } from '@rneui/base'
 import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
 import {db,auth} from '../firebase'
 import CustomListItem from '../components/CustomListItem'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
 import FontAwesome5 from 'react-native-vector-icons/FontAwesome5';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
 
 const HomeScreen = ({navigation}) => {
 
@@ -16,6 +18,8 @@ const HomeScreen = ({navigation}) => {
           navigation.replace("Login")
         })
   }
+
+ 
 
   const storeData = async (value) => {
     try {
@@ -52,14 +56,14 @@ const HomeScreen = ({navigation}) => {
 
   useLayoutEffect(()=>{
     navigation.setOptions({
-      title:"Signal",
+      title:auth.currentUser.displayName.substring(0,15),
       headerStyle:{backgroundColor:'#fff'},
       headerTitleStyle:{color:'#000'},
       headerTintColor:"black",
       headerLeft:()=>(
-        <View style={{marginLeft:20}}>
+        <View style={{marginLeft:5,marginRight:20}}>
           <TouchableOpacity onPress={signOutUser} activeOpacity={0.5}>
-            <Avatar rounded source={{uri:auth?.currentUser?.photoURL}}/>
+            <Avatar rounded source={{uri:auth?.currentUser?.photoURL}} size={60}/>
           </TouchableOpacity>
         </View>
       ),
@@ -72,32 +76,36 @@ const HomeScreen = ({navigation}) => {
             marginRight:20,
           }}
           >
-            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')}>
-            <FontAwesome5 name={'brain'} size={24} solid />
+            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')} >
+              <FontAwesome5 name={'brain'} size={24} solid />
             </TouchableOpacity>
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')}>
-              <AntDesign name="question" size={24} color="black"/>
-             
+              <Icon name="question" size={24} color="black"/>
             </TouchableOpacity>
+            
           </View>
     )
     })
   },[navigation])
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{flex:1,position:'relative'}}>
      <ScrollView>
        {
          quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
-         quizs.map(({id,data:{name}})=>(
+         quizs.map(({id,data:{name,idShare}})=>(
           <CustomListItem
             key={id}
             id={id}
+            idShare={idShare}
             name={name}
             navigation={navigation}
           />
          ))
        }
      </ScrollView>
+     <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('JoinQuiz')} style={{marginStart:'auto',marginEnd:30,marginBottom:30}}>
+        <Icon name="code" size={44} color="#ffff" style={{width:50,height:50,borderRadius:25,backgroundColor:'#080080'}}/>
+      </TouchableOpacity>
     </SafeAreaView>
   )
 }
