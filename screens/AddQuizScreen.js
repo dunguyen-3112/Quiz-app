@@ -50,7 +50,7 @@ const AddQuizScreen = ({navigation}) => {
         return unSubscribe
       },[])
   return (
-    <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
+    <SafeAreaView style={{flex:1,backgroundColor:'white',paddingTop: StatusBar.currentHeight,}}>
         <StatusBar style='light'/>
         <KeyboardAvoidingView behavior='height' keyboardVerticalOffset={90}>
             <Input
@@ -58,7 +58,8 @@ const AddQuizScreen = ({navigation}) => {
                 value={input}
                 onChangeText={text=>setInput(text)}
             />
-            <ScrollView>
+           
+            <ScrollView style={{marginHorizontal: 20,}}>
                 {
                     questions.map(({id,data},index)=>(
                         <ListItem bottomDivider key={id} onPress={()=>handleQuestion(index,{id,data})}>
@@ -71,11 +72,12 @@ const AddQuizScreen = ({navigation}) => {
                     ))
                 }
             </ScrollView>
+          
             <TouchableOpacity
                 onPress={HandleAddQuiz}
                 disabled = {isDisabled}
                 style={{
-                    marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
+                    marginTop: 'auto',marginBottom:50, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
                 }}>
                     <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Add</Text>
                 </TouchableOpacity>

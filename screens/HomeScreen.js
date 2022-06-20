@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage} from 'react-native'
+import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage,StatusBar} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Avatar, Button } from '@rneui/base'
 import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
@@ -88,8 +88,9 @@ const HomeScreen = ({navigation}) => {
     })
   },[navigation])
   return (
-    <SafeAreaView style={{flex:1,position:'relative'}}>
-     <ScrollView>
+    <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white',paddingTop: StatusBar.currentHeight,}}>
+      <StatusBar style='light'/>
+     <ScrollView style={{marginHorizontal: 20,}}>
        {
          quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
          quizs.map(({id,data:{name,idShare}})=>(
