@@ -36,7 +36,6 @@ const QuizScreen = ({navigation,route}) => {
     }
     useEffect(()=>{
       const unSubscribe = db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
-      //collection('users').doc(auth.currentUser.uid).
       setQuestions(
           snapshot.data().questions.map(doc=>(({
             data:doc.id
@@ -45,7 +44,7 @@ const QuizScreen = ({navigation,route}) => {
       
       )
       return unSubscribe
-    },[currentQuestionIndex])
+    },[])
   return (
     <SafeAreaView style={{
       flex: 1,

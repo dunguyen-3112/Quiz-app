@@ -2,7 +2,6 @@ import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncS
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Avatar } from '@rneui/base'
 import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
-import * as firebase from 'firebase'
 import {db,auth} from '../firebase'
 import CustomListItem from '../components/CustomListItem'
 // import AsyncStorage from '@react-native-async-storage/async-storage'

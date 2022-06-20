@@ -8,7 +8,6 @@ import AddQuestionScreen from './screens/AddQuestionScreen';
 import AddQuizScreen from './screens/AddQuizScreen';
 import QuizScreen from './screens/QuizScreen';
 import Result from './screens/Result';
-import firebase from 'firebase';
 
 const Stack = createNativeStackNavigator()
 const globalScreenOptions = {

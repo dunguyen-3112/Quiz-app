@@ -2,7 +2,6 @@ import { KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, Touch
 import React, { useState ,useEffect} from 'react'
 import { StatusBar } from 'expo-status-bar'
 import { Button, Input } from '@rneui/base'
-import * as firebase from 'firebase'
 import {auth,db} from '../firebase'
 import { ListItem } from '@rneui/themed'
 

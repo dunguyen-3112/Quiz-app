@@ -1,37 +1,41 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { ScrollView, StyleSheet, Text, View,  SafeAreaView } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { db,auth } from '../firebase'
-import * as firebase from 'firebase'
-import routes from 'webpack-dev-server/lib/utils/routes'
+
+import ItemResult from '../components/ItemResult'
 
 const Result = ({navigation,route}) => {
 
     const [result,setResult] = useState([])
 
     useEffect(()=>{
-      //   db.collection('demo').add({
-      //     questions:1,
-      //     name:'abc',
-      //     uid:auth.currentUser.uid
-      // })
-      // .then(()=>{}).catch(error=>alert(error))
 
-      const unSubscribe = db.collection('quiz').doc(route.params.id).collection('result').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
+      const unSubscribe = db.collection('quizs').doc(route.params.id).collection('result').onSnapshot((snapshot)=>
+
       setResult(
-        snapshot.docs.map(doc=>({
-        id:doc.id,
-        data:doc.data()
-        }))
-      ))
+        snapshot.docs.map(doc=>({uid:doc.data().uid,correctAnswerIndex:doc.data().correctAnswerIndex}
+        
+        ))
+      )
+      
+      )
       return unSubscribe
     },[])
   return (
-    <View>
-      <Text>Result</Text>
+    <SafeAreaView>
+    <ScrollView>
       {
-        console.log(result)
+        result.length===0?<Text>Đang tải dữ liệu</Text>:<View>
+        {
+            result.map((item)=>(
+              <ItemResult id={item.uid} correctAnswerIndex={item.correctAnswerIndex}/>
+            ))
+            
+        }
+      </View>
       }
-    </View>
+    </ScrollView>
+    </SafeAreaView>
   )
 }
 
