@@ -6,9 +6,11 @@ import {db,auth} from '../firebase'
 const Question = (props) => {
 
   const [question,setQuestion] = useState(null)
+  const [isDisable,setIsDisable] = useState(false)
   const [currentOptionSelected,setCurrentOptionSelected] = useState('')
   useEffect(()=>{
     setCurrentOptionSelected('')
+    setIsDisable(false)
      const unSubscribe = db.collection('questions')
                           .doc(props.data)
                           .onSnapshot((snapshot)=>
@@ -18,6 +20,7 @@ const Question = (props) => {
     },[props.data])
 
   const handlePress = (value)=>{
+    setIsDisable(true)
     setCurrentOptionSelected(value)
     if(value == question.correctAnswer)
       props.handlecorrectAnswer()
@@ -41,7 +44,7 @@ const Question = (props) => {
             question.answers.map((item,index)=>{
                 return (
                  
-                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} onLongPress={{}} key={index} />
+                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} onLongPress={{}} isDisable={isDisable} key={index} />
                       
                   )
               })

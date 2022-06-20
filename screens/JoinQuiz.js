@@ -2,25 +2,30 @@ import { StyleSheet, Text, View,SafeAreaView,StatusBar,TouchableOpacity,Keyboard
 import {  Input } from '@rneui/base'
 import React,{ useState } from 'react'
 import {auth,db} from '../firebase'
+import { useEffect } from 'react'
 
 
 const JoinQuiz = ({navigation}) => {
     const [input,setInput]  = useState('')
     const [question,setQuestion]= useState([])
-    const HandleJoinQuiz = ()=>{
-        db.collection('quizs').where('idShare','==',input).onSnapshot((snapshot)=>
-        setQuestion(
-          snapshot.docs.map(doc=>({
-          id:doc.id,
-          data:doc.data()
-          }))
-        ))
+    const HandleJoinQuiz = async ()=>{
         if (question.length==1){
             navigation.replace('Quiz',{id:question[0].id})
         }
         else alert('ID không hợp lệ!')
-        
+       
     }
+
+    useEffect(()=>{
+        const unSubscribe = db.collection('quizs').where('idShare','==',input).onSnapshot((snapshot)=>
+            setQuestion(
+            snapshot.docs.map(doc=>({
+            id:doc.id,
+            data:doc.data()
+            }))
+            ))
+            return unSubscribe
+    },[input])
   return (
     <SafeAreaView style={{flex:1,backgroundColor:'white'}}>
     <StatusBar style='light'/>

@@ -16,7 +16,7 @@ const QuizScreen = ({navigation,route}) => {
         setCurrentQuestionIndex(currentQuestionIndex+1)
         setIsDisabled(true)
       if(currentQuestionIndex+1===questions.length){
-        alert('Bạn làm đúng '+correctAnswerIndex+' câu.')
+        alert('Bạn làm đúng '+correctAnswerIndex+' trong '+questions.length+' câu.')
         db.collection('quizs').doc(route.params.id).collection('result').add({
           uid:auth.currentUser.uid,
           correctAnswerIndex,
@@ -36,16 +36,17 @@ const QuizScreen = ({navigation,route}) => {
     const handlecorrectAnswer = ()=>{
       setCorrectAnswerIndex(correctAnswerIndex+1)
     }
+
     useEffect(()=>{
-      const unSubscribe = db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
-      setQuestions(
-          snapshot.data().questions.map(doc=>(({
-            data:doc.id
-          } )))
-        )
-      
+      const unsunscribe =  db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
+        setQuestions(
+            snapshot.data().questions.map(doc=>(({
+              data:doc.id
+            } )))
+          )
       )
-      return unSubscribe
+      if ( unsunscribe)
+        return unsunscribe
     },[])
   return (
     <SafeAreaView style={{

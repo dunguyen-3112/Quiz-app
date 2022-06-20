@@ -4,38 +4,30 @@ import { db,auth } from '../firebase'
 
 import ItemResult from '../components/ItemResult'
 
-const Result = ({navigation,route}) => {
+const Result = ({route}) => {
 
     const [result,setResult] = useState([])
 
     useEffect(()=>{
-      const unSubscribe = db.collection('quizs').doc(route.params.id).collection('result').onSnapshot((snapshot)=>
-
-      setResult(
-        snapshot.docs.map(doc=>(doc.data()))
+      const unSubscribe =   db.collection('quizs').doc(route.params.id).collection('result').onSnapshot((snapshot)=>
+        setResult(snapshot.docs.map(doc=>(doc.data())))
       )
-      
-      )
-      
       return unSubscribe
     },[])
   return (
     <SafeAreaView>
-      {console.log(result)}
-    <ScrollView>
+      <ScrollView>
       {
         result.length===0?<Text>Đang tải dữ liệu</Text>:<View>
         {
-            result.map((item)=>(
-              <ItemResult data={item}/>
-
-            ))
-            
+          result.map((item,index)=>(
+            <ItemResult data={item} key={index}/>
+          ))
         }
       </View>
       }
     </ScrollView>
-    </SafeAreaView>
+  </SafeAreaView>
   )
 }
 

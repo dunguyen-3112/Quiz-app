@@ -2,9 +2,7 @@ import { StyleSheet,View, Text,TouchableOpacity } from 'react-native'
 import React,{useEffect, useState} from 'react'
 
 const Answer = (props) => {
-  const [isDisable,setIsDisabled] = useState(false)
   const handlePress = ()=>{
-
     props.onPress(props.text)
   }
   const handleLongPress =()=>{
@@ -18,9 +16,9 @@ const Answer = (props) => {
       fontSize:20,
       borderWidth: 3, 
       borderColor: props.currentOptionSelected != '' & props.text==props.correctOption 
-      ? '#00C851' //xanh lá
+      ? '#00C851' 
       : props.text==props.currentOptionSelected 
-      ? '#ff4444' //đỏ
+      ? '#ff4444' 
       : '#1E90FF'+'40',
       backgroundColor: props.currentOptionSelected != '' & props.text==props.correctOption 
       ? '#00C851' +'20'
@@ -39,7 +37,7 @@ const Answer = (props) => {
   return (
     <View>
   
-        <TouchableOpacity activeOpacity={0.5} onPress={handlePress} onLongPress={handleLongPress} disabled={isDisable}>
+        <TouchableOpacity activeOpacity={0.5} onPress={handlePress} onLongPress={handleLongPress} disabled={props.isDisable}>
             <Text style={style.answer}> {props.text}</Text>
         </TouchableOpacity>
     </View>

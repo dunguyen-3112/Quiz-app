@@ -9,6 +9,7 @@ const CustomListItem = ({id,name,idShare,navigation}) => {
   const copyToClipboard = () => {
     Clipboard.setString(idShare)
   }
+  
 
     const handlePress = ()=>{
         navigation.navigate('Quiz',{id:id})
