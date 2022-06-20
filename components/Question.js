@@ -6,24 +6,28 @@ import {db,auth} from '../firebase'
 const Question = (props) => {
 
   const [question,setQuestion] = useState(null)
-  const [text,setText] = useState('')
+  const [isDisable,setIsDisable] = useState(false)
   const [currentOptionSelected,setCurrentOptionSelected] = useState('')
   useEffect(()=>{
     setCurrentOptionSelected('')
-     const unSubscribe = db.collection('users')
-                          .doc(auth.currentUser.uid)
-                          .collection('questions')
-                          .doc(props.data.id)
+    setIsDisable(false)
+     const unSubscribe = db.collection('questions')
+                          .doc(props.data)
                           .onSnapshot((snapshot)=>
                           setQuestion(snapshot.data())
                           )
       return unSubscribe
-    },[props.data.id])
+    },[props.data])
 
   const handlePress = (value)=>{
+    setIsDisable(true)
     setCurrentOptionSelected(value)
+    if(value == question.correctAnswer)
+      props.handlecorrectAnswer()
     props.handleDisable()
   }
+
+ 
 
  
 
@@ -32,6 +36,7 @@ const Question = (props) => {
       {
         question?
         <View>
+          
           <Text style={style.question}>{question.question}</Text>
       <View>
           {
@@ -39,7 +44,7 @@ const Question = (props) => {
             question.answers.map((item,index)=>{
                 return (
                  
-                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} key={index} />
+                       <Answer text={item} correctOption={question.correctAnswer} currentOptionSelected={currentOptionSelected} onPress={handlePress} onLongPress={{}} isDisable={isDisable} key={index} />
                       
                   )
               })

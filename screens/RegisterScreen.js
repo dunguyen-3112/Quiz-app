@@ -11,6 +11,20 @@ const RegisterScreen = ({navigation}) => {
     const [email,setEmail] = useState('')
     const [password,setPassword] = useState('')
     const [imageUrl,setImageUrl] = useState('')
+
+
+    const createUser = async(uid,displayName,photoURL)=>{
+        await db.collection('questions').add({
+          uid,
+          displayName,
+          photoURL,
+        })
+        .then(()=>{
+          navigation.goBack()
+        })
+        .catch(error=>alert(error))
+    }
+
     const register = ()=>{
       auth
       .createUserWithEmailAndPassword(email, password)
@@ -22,17 +36,8 @@ const RegisterScreen = ({navigation}) => {
         })
       })
       .catch(error => alert(error.message))
+      //createUser(name,imageUrl||'https://media.istockphoto.com/vectors/hipster-man-vector-avatar-vector-id1072484204?k=20&m=1072484204&s=612x612&w=0&h=EaokStoQuejKpBB-xWiOf3KHdF-riHRxEoLGRphccxk=')
     };
-
-    const createData = async()=>{
-      await db.collection('chats').add({
-        name:'abc'
-      })
-      .then(()=>{
-        navigation.goBack()
-      })
-      .catch(error=>alert(error))
-    }
 
     useLayoutEffect(()=>{
       navigation.setOptions({
