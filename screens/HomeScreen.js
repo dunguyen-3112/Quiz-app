@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}) => {
       const jsonValue = await AsyncStorage.getItem('@quizs')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
-      // error reading value
+  
     }
   }
   storeData({x:1})
@@ -56,7 +56,7 @@ const HomeScreen = ({navigation}) => {
 
   useLayoutEffect(()=>{
     navigation.setOptions({
-      title:auth.currentUser.displayName.substring(0,15),
+      title:auth.currentUser.displayName?auth.currentUser.displayName.substring(0,15):'',
       headerStyle:{backgroundColor:'#fff'},
       headerTitleStyle:{color:'#000'},
       headerTintColor:"black",
@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')} >
               <FontAwesome5 name={'brain'} size={24} solid />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')}>
+            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Questions')}>
               <Icon name="question" size={24} color="black"/>
             </TouchableOpacity>
             
