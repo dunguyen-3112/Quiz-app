@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage} from 'react-native'
+import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage,StatusBar} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
 import { Avatar, Button } from '@rneui/base'
 import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
@@ -35,7 +35,7 @@ const HomeScreen = ({navigation}) => {
       const jsonValue = await AsyncStorage.getItem('@quizs')
       return jsonValue != null ? JSON.parse(jsonValue) : null;
     } catch(e) {
-      // error reading value
+  
     }
   }
   storeData({x:1})
@@ -56,7 +56,7 @@ const HomeScreen = ({navigation}) => {
 
   useLayoutEffect(()=>{
     navigation.setOptions({
-      title:auth.currentUser.displayName.substring(0,15),
+      title:auth.currentUser.displayName?auth.currentUser.displayName.substring(0,15):'',
       headerStyle:{backgroundColor:'#fff'},
       headerTitleStyle:{color:'#000'},
       headerTintColor:"black",
@@ -79,7 +79,7 @@ const HomeScreen = ({navigation}) => {
             <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuiz')} >
               <FontAwesome5 name={'brain'} size={24} solid />
             </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')}>
+            <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Questions')}>
               <Icon name="question" size={24} color="black"/>
             </TouchableOpacity>
             
@@ -88,8 +88,9 @@ const HomeScreen = ({navigation}) => {
     })
   },[navigation])
   return (
-    <SafeAreaView style={{flex:1,position:'relative'}}>
-     <ScrollView>
+    <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white',paddingTop: StatusBar.currentHeight,}}>
+      <StatusBar style='light'/>
+     <ScrollView style={{marginHorizontal: 20,}}>
        {
          quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
          quizs.map(({id,data:{name,idShare}})=>(

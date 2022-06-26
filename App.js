@@ -9,6 +9,8 @@ import AddQuizScreen from './screens/AddQuizScreen';
 import QuizScreen from './screens/QuizScreen';
 import Result from './screens/Result';
 import JoinQuiz from './screens/JoinQuiz'
+import EditQuizScreen from './screens/EditQuizScreen';
+import Quesions from './screens/Quesions';
 
 const Stack = createNativeStackNavigator()
 const globalScreenOptions = {
@@ -24,10 +26,12 @@ export default function Anpmpp() {
        <Stack.Screen name='Register' component={RegisterScreen} />
        <Stack.Screen name='Home' component={HomeScreen} />
        <Stack.Screen name='AddQuestion' component={AddQuestionScreen} />
+       <Stack.Screen name='Questions' component={Quesions} />
        <Stack.Screen name='AddQuiz' component={AddQuizScreen} />
        <Stack.Screen name='Quiz' component={QuizScreen} />
        <Stack.Screen name='Result' component={Result}/>
        <Stack.Screen name='JoinQuiz' component={JoinQuiz}/>
+       <Stack.Screen name='EditQuiz' component={EditQuizScreen}/>
      </Stack.Navigator>
    </NavigationContainer>
 
