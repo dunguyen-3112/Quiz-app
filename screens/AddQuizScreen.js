@@ -1,7 +1,7 @@
 import { KeyboardAvoidingView, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import React, { useState ,useEffect} from 'react'
+import React, { useState ,useEffect,useLayoutEffect} from 'react'
 import { StatusBar } from 'expo-status-bar'
-import { Button, Input } from '@rneui/base'
+import {  Input } from '@rneui/base'
 import {auth,db} from '../firebase'
 import { ListItem } from '@rneui/themed'
 import uuid from 'react-native-uuid';
@@ -26,6 +26,11 @@ const AddQuizScreen = ({navigation}) => {
         .catch(error=>alert(error))
         
     }
+    useLayoutEffect(()=>{
+        navigation.setOptions({
+            title:'Tạo mới bài đố'
+        })
+    },[navigation])
 
     const handleQuestion = (index,{id})=>{
         let arr = [...questions]
@@ -54,7 +59,7 @@ const AddQuizScreen = ({navigation}) => {
         <StatusBar style='light'/>
         <KeyboardAvoidingView behavior='height' keyboardVerticalOffset={90}>
             <Input
-                placeholder='Enter Name Quiz'
+                placeholder='Gõ tên bài đố'
                 value={input}
                 onChangeText={text=>setInput(text)}
             />
@@ -79,7 +84,7 @@ const AddQuizScreen = ({navigation}) => {
                 style={{
                     marginTop: 'auto',marginBottom:50, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
                 }}>
-                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Add</Text>
+                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>Thêm</Text>
                 </TouchableOpacity>
         </KeyboardAvoidingView>
     </SafeAreaView>

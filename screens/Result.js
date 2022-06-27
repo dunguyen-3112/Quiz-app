@@ -1,12 +1,18 @@
 import { ScrollView, StyleSheet, Text, View,  SafeAreaView } from 'react-native'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState ,useLayoutEffect} from 'react'
 import { db,auth } from '../firebase'
 
 import ItemResult from '../components/ItemResult'
 
-const Result = ({route}) => {
+const Result = ({route,navigation}) => {
 
     const [result,setResult] = useState([])
+
+    useLayoutEffect(()=>{
+      navigation.setOptions({
+          title:'Bảng xếp hạng'
+      })
+  },[navigation])
 
     useEffect(()=>{
       const unSubscribe =   db.collection('quizs').doc(route.params.id).collection('result').onSnapshot((snapshot)=>
