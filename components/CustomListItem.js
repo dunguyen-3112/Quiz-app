@@ -42,10 +42,10 @@ const CustomListItem = ({id,name,idShare,navigation}) => {
   
 
     const handlePress = ()=>{
-        navigation.navigate('Quiz',{id:id})
+        navigation.navigate('EditQuiz',{id:id})
     }
   return (
-    <ListItem  bottomDivider  onLongPress={showConfirmDialog} onPress={()=>navigation.navigate('EditQuiz',{id:id})}>
+    <ListItem  bottomDivider  onLongPress={showConfirmDialog} onPress={()=>navigation.navigate('Quiz',{id:id})}>
      <ListItem.Content style={{flexDirection:'row',justifyContent:'flex-start'}}>
      {/* <Avatar
             size={56}
@@ -57,7 +57,7 @@ const CustomListItem = ({id,name,idShare,navigation}) => {
         onPress={handlePress}
         //  onPress={()=>navigation.navigate('Result',{id:id})} 
          style={{marginStart:'auto',marginEnd:20,alignSelf:'center'}}>
-              <AntDesign name="eye" size={20} color="blue"/>
+              <AntDesign name="edit" size={20} color="blue"/>
           </TouchableOpacity>
           <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('Result',{id:id})}  style={{marginEnd:20,alignSelf:'center'}} >
               <FontAwesome5 name={'user-friends'} size={20} solid color={'blue'} />

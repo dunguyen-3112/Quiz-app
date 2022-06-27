@@ -60,7 +60,7 @@ const QuestionText = (props) => {
     <SafeAreaView style={{width:'100%'}}>
       {
         question?
-        <View style={{backgroundColor:'#7FFFD4',borderBottomLeftRadius:20,marginBottom:5,marginTop:5,marginStart:10,marginEnd:10,borderTopRightRadius:20}}>
+        <View style={{backgroundColor:'#7FFFD4',borderBottomLeftRadius:20,marginBottom:5,marginTop:5,padding:10,marginStart:10,marginEnd:10,borderTopRightRadius:20}}>
           <TouchableOpacity onLongPress={handleLongPress}><View><Text style={style.question}>{question.question}</Text></View></TouchableOpacity>
         </View>
         :<Text>Đang tải dữ liệu!</Text>

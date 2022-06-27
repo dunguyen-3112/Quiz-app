@@ -62,7 +62,7 @@ const QuizScreen = ({navigation,route}) => {
     },[])
   return (
     <SafeAreaView style={{
-      flex: 1,
+                flex: 1,
                paddingVertical: 40,
                paddingHorizontal: 16,
                backgroundColor: '#252C4A',
