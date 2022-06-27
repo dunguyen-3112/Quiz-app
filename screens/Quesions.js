@@ -11,7 +11,6 @@ const Quesions = ({navigation}) => {
     useEffect(()=>{
    
         const unSubscribe = db.collection('questions').where('uid','==',auth.currentUser.uid).onSnapshot((snapshot)=>
-        //.collection('users').doc(auth.currentUser.uid)
         setQuestions(
             snapshot.docs.map(doc=>({
             id:doc.id,
@@ -32,10 +31,12 @@ const Quesions = ({navigation}) => {
   return (
     <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white'}}>
       <StatusBar style='light'/>
+      {console.log(questions)}
      <ScrollView style={{marginHorizontal: 20,}}>
        {
          questions.length ===0?<Text>Đang tải dữ liệu</Text>:
          questions.map(({id,data:{question}})=>(
+
           <CustomListQuestionItem
             key={id}
             id={id}

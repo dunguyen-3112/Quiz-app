@@ -10,7 +10,8 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 const EditQuizScreen = ({route,navigation}) => {
     const [quizs,setQuizs] = useState([])
     const [input,setInput] = useState('')
-  
+    const [idShare,setIdShare] = useState('')
+    const [uid,setUid] = useState('')
 
     useLayoutEffect(()=>{
       navigation.setOptions({
@@ -21,26 +22,37 @@ const EditQuizScreen = ({route,navigation}) => {
         const unSubscribe =  db.collection('quizs').doc(route.params.id).onSnapshot((snapshot)=> 
        { 
         setInput(snapshot.data().name)
+        setIdShare(snapshot.data().idShare)
+        setUid(snapshot.data().uid)
         setQuizs(
             snapshot.data().questions.map(doc=>(({
-              data:doc.id,
+              id:doc.id,
             } )))
           )}
       )
       return unSubscribe
     },[route.params.id])
 
+    const handleBlur = ()=>{
+      db.collection('quizs').doc(route.params.id).set({
+        "name":input,
+        "questions":quizs,
+        "idShare":idShare,
+        "uid":uid,
+      })
+    }
+
   
   return (
     <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white'}}>
       <StatusBar style='light'/>
-     <ScrollView style={{marginHorizontal: 20,}}>
-        <Input onChangeText={(text)=>setInput(text)} value={input}/>
+     <View style={{marginHorizontal: 20,}}>
+        <Input onChangeText={(text)=>setInput(text)} value={input} onBlur={handleBlur}/>
         {quizs.length>0?(<View>
           {
             quizs.map((item,index)=>{
                 return (
-                    <QuestionText data={item.data} key={index} quizId={route.params.id} handleDisable={()=>{}} handlecorrectAnswer = {()=>{}}/>
+                    <QuestionText data={item.id} key={index} quizId={route.params.id} handleDisable={()=>{}} handlecorrectAnswer = {()=>{}}/>
                   )
               })
           }
@@ -48,7 +60,7 @@ const EditQuizScreen = ({route,navigation}) => {
       <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')} style={{marginStart:'auto',marginEnd:30,marginBottom:30}}>
         <Icon name="add" size={50} color="#FFFFFF" style={{width:50,height:50,borderRadius:25,backgroundColor:'blue'}}/>
       </TouchableOpacity>
-      </ScrollView>
+      </View>
     </SafeAreaView>
   )
 }
