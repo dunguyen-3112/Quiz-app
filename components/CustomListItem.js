@@ -14,17 +14,17 @@ const CustomListItem = ({id,name,idShare,navigation}) => {
 
   const showConfirmDialog = () => {
     return Alert.alert(
-      "Are your sure?",
-      "Are you sure you want to remove this beautiful box?",
+      "Quizzes",
+      "Bạn có có muốn xoá bộ câu hỏi này không?",
       [
         // The "Yes" button
         {
-          text: "Yes",
+          text: "Có",
           onPress: () => {
         
             db.collection('quizs').doc(id).delete()
             .then(()=>{
-              alert("Xoa thanh cong")
+              alert("Xoá thành công !")
             })
             .catch(err=>{
               alert(err.message)
@@ -34,7 +34,7 @@ const CustomListItem = ({id,name,idShare,navigation}) => {
         // The "No" button
         // Does nothing but dismiss the dialog when tapped
         {
-          text: "No",
+          text: "Không",
         },
       ]
     )

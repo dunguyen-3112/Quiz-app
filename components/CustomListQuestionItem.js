@@ -9,17 +9,17 @@ const CustomListItem = ({id,name,navigation}) => {
 
   const showConfirmDialog = () => {
     return Alert.alert(
-      "Bạn có chắc không?",
-      "Bạn có chắc chắn muốn loại câu hỏi này không",
+      "Questions",
+      "Bạn có chắc chắn muốn loại câu hỏi này không ?",
       [
         // The "Yes" button
         {
-          text: "Vâng",
+          text: "Có",
           onPress: () => {
         
             db.collection('questions').doc(id).delete()
             .then(()=>{
-              alert("Xoa thanh cong")
+              alert("Xoá thành công !")
             })
             .catch(err=>{
               alert(err.message)

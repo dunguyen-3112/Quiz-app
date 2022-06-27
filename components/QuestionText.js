@@ -17,12 +17,12 @@ const QuestionText = (props) => {
 
     const showConfirmDialog = () => {
       return Alert.alert(
-        "Bạn có chắc không?",
-        "Bạn có chắc chắn muốn loại câu hỏi này không",
+        "Questions",
+        "Bạn có chắc chắn muốn loại câu hỏi này không ?",
         [
           // The "Yes" button
           {
-            text: "Vâng",
+            text: "Có",
             onPress: () => {
               deleteQ()
             },
