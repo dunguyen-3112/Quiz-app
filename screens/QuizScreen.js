@@ -1,7 +1,6 @@
-import { StyleSheet, View,ScrollView, SafeAreaView, StatusBar ,TouchableOpacity,Text,Image} from 'react-native'
-import React, { useEffect, useState } from 'react'
+import { StyleSheet, View, SafeAreaView, StatusBar ,TouchableOpacity,Text,Image,Alert} from 'react-native'
+import React, { useEffect, useState,useLayoutEffect } from 'react'
 import { db,auth } from '../firebase'
-import * as firebase from 'firebase'
 import Question from '../components/Question'
 
 const QuizScreen = ({navigation,route}) => {
@@ -11,12 +10,25 @@ const QuizScreen = ({navigation,route}) => {
     const [currentQuestionIndex,setCurrentQuestionIndex] = useState(0)
     const [correctAnswerIndex,setCorrectAnswerIndex] = useState(0)
 
+    const showConfirmDialog = (a,b) => {
+      console.log(a,b)
+      return Alert.alert(
+        "Xin chúc mừng",
+        "Bạn làm đúng "+a+' trên '+b+' câu!',
+      )
+    }
+    useLayoutEffect(()=>{
+      navigation.setOptions({
+          title:'Bài đố'
+      })
+  },[navigation])
+
     const handleNext = ()=>{
       if(currentQuestionIndex<questions.length-1)
         setCurrentQuestionIndex(currentQuestionIndex+1)
         setIsDisabled(true)
       if(currentQuestionIndex+1===questions.length){
-        alert('Bạn làm đúng '+correctAnswerIndex+' trong '+questions.length+' câu.')
+        showConfirmDialog(correctAnswerIndex,questions.length)
         db.collection('quizs').doc(route.params.id).collection('result').add({
           uid:auth.currentUser.uid,
           correctAnswerIndex,
@@ -69,7 +81,7 @@ const QuizScreen = ({navigation,route}) => {
                 style={{
                     marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
                 }}>
-                    <Text style={{fontSize: 20, color: '#fff', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Send':'Next'}</Text>
+                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Nộp':'Tiếp'}</Text>
                 </TouchableOpacity>
        </View>
        <Image

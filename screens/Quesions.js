@@ -1,8 +1,12 @@
-import { StyleSheet, Text, View } from 'react-native'
-import React, { useState,useEffect } from 'react'
+import { StyleSheet, Text, View,SafeAreaView,StatusBar,TouchableOpacity,ScrollView } from 'react-native'
+import React, { useState,useEffect ,useLayoutEffect} from 'react'
+import CustomListQuestionItem from '../components/CustomListQuestionItem'
+//import Icon from 'react-native-vector-icons/FontAwesome';
+import {db,auth} from '../firebase'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-const Quesions = () => {
-    conts [questions,setQuestions] = useState([])
+const Quesions = ({navigation}) => {
+    const [questions,setQuestions] = useState([])
 
     useEffect(()=>{
    
@@ -19,25 +23,30 @@ const Quesions = () => {
    
     },[])
 
+    useLayoutEffect(()=>{
+      navigation.setOptions({
+          title:'Danh sách câu hỏi'
+      })
+  },[navigation])
+
   return (
-    <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white',paddingTop: StatusBar.currentHeight,}}>
+    <SafeAreaView style={{flex:1,position:'relative',backgroundColor:'white'}}>
       <StatusBar style='light'/>
      <ScrollView style={{marginHorizontal: 20,}}>
        {
-         quizs.length ===0?<Text>Đang tải dữ liệu</Text>:
-         quizs.map(({id,data:{name,idShare}})=>(
-          <CustomListItem
+         questions.length ===0?<Text>Đang tải dữ liệu</Text>:
+         questions.map(({id,data:{question}})=>(
+          <CustomListQuestionItem
             key={id}
             id={id}
-            idShare={idShare}
-            name={name}
+            name={question}
             navigation={navigation}
           />
          ))
        }
      </ScrollView>
      <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('AddQuestion')} style={{marginStart:'auto',marginEnd:30,marginBottom:30}}>
-        <Icon name="code" size={44} color="#ffff" style={{width:50,height:50,borderRadius:25,backgroundColor:'#080080'}}/>
+        <Icon name="add" size={50} color="#FFFFFF" style={{width:50,height:50,borderRadius:25,backgroundColor:'blue'}}/>
       </TouchableOpacity>
     </SafeAreaView>
   )

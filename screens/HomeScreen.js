@@ -1,7 +1,6 @@
 import { StyleSheet, Text, View ,SafeAreaView,ScrollView,TouchableOpacity,AsyncStorage,StatusBar} from 'react-native'
 import React, { useEffect, useLayoutEffect, useState } from 'react'
-import { Avatar, Button } from '@rneui/base'
-import {AntDesign,SimpleLineIcons} from '@expo/vector-icons'
+import { Avatar } from '@rneui/base'
 import {db,auth} from '../firebase'
 import CustomListItem from '../components/CustomListItem'
 // import AsyncStorage from '@react-native-async-storage/async-storage'
@@ -105,7 +104,7 @@ const HomeScreen = ({navigation}) => {
        }
      </ScrollView>
      <TouchableOpacity activeOpacity={0.5} onPress={()=>navigation.navigate('JoinQuiz')} style={{marginStart:'auto',marginEnd:30,marginBottom:30}}>
-        <Icon name="code" size={44} color="#ffff" style={{width:50,height:50,borderRadius:25,backgroundColor:'#080080'}}/>
+        <Icon name="code" size={44} color="#FFFFFF" style={{width:50,height:50,borderRadius:25,backgroundColor:'#123456'}}/>
       </TouchableOpacity>
     </SafeAreaView>
   )

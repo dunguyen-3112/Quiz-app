@@ -20,9 +20,12 @@ const AddQuestionScreen = ({navigation}) => {
       }else{
         alert('Vui lòng nhập câu trả lời!')
       }
+      if(answers.length >3){
+        alert('Câu hỏi tối đa 4 câu trả lời!')
+      }
     }
     const createData = async()=>{
-      if(correctAnswer.length !==0){
+      if(correctAnswer.length !==0 & input.trim()==''){
         await db.collection('questions').add({
           //collection('users').doc(auth.currentUser.uid).
           question,
@@ -34,23 +37,26 @@ const AddQuestionScreen = ({navigation}) => {
           navigation.goBack()
         })
         .catch(error=>alert(error))
-      }else{
-        alert('Vui lòng nhấn giữ để chọn đáp án.')
+      } 
+      else{
+        alert('Vui lòng nhập đủ thông tin và chọn đáp án.')
       }
     }
    
     useLayoutEffect(()=>{
         navigation.setOptions({
-            title:'Add new a Question'
+            title:'Thêm câu hỏi'
         })
     },[navigation])
   return (
     <KeyboardAvoidingView behavior='padding' style={styles.container}>
       <StatusBar style='light'/>
-      <Text h3 style={{marginBottom:50}}>Create a question</Text>
+      <Text h3 style={{marginBottom:10}}>Tạo mới câu hỏi</Text>
+      
       <View style={styles.inputContainer}>
+      <Text h5 style={{marginBottom:50}}>(Nhấn giữ câu trả lời để xóa, nhấn câu trả lời đúng  để chọn đáp án.)</Text>
           <Input 
-            placeholder='Type Question' 
+            placeholder='Gõ câu hỏi' 
             autoFocus 
             type='text'
             value={question}
@@ -60,7 +66,7 @@ const AddQuestionScreen = ({navigation}) => {
             <Entypo name="add-to-list" size={40} color="blue"  />
           </TouchableOpacity>
            <Input 
-                placeholder='Type Answer' 
+                placeholder='Gõ câu trả lời' 
                 type='text'
                 value={input}
                 onChangeText={text=>setInput(text)}
@@ -80,7 +86,7 @@ const AddQuestionScreen = ({navigation}) => {
       </View>
       <Button
         onPress={createData}
-        title='Add'
+        title='Thêm'
         raised
         containerStyle={styles.button}
       />
