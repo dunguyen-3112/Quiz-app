@@ -1,4 +1,4 @@
-import { View, Text,SafeAreaView,StyleSheet ,TouchableOpacity} from 'react-native'
+import { View, Text,SafeAreaView,StyleSheet ,TouchableOpacity,Alert} from 'react-native'
 import React, { useEffect, useState } from 'react'
 import {db,auth} from '../firebase'
 
@@ -15,14 +15,41 @@ const QuestionText = (props) => {
       return unSubscribe
     },[props.data])
 
+    const showConfirmDialog = () => {
+      return Alert.alert(
+        "Bạn có chắc không?",
+        "Bạn có chắc chắn muốn loại câu hỏi này không",
+        [
+          // The "Yes" button
+          {
+            text: "Vâng",
+            onPress: () => {
+              deleteQ()
+            },
+          },
+          // The "No" button
+          // Does nothing but dismiss the dialog when tapped
+          {
+            text: "Không",
+          },
+        ]
+      )
+    }
+
+    const deleteQ = async ()=>{
+     await db.collection('quizs').doc(props.quizId).onSnapshot((snapshot)=>{
+      let value = []
+      let value1 = snapshot.data()
+      snapshot.data().questions.map((item)=>{
+        if (item.id != props.data) value.push(item)
+      })
+      value1.questions = value
+      db.collection('quizs').doc(props.quizId).set(value1)
+     })
+    }
+
   const handleLongPress = ()=>{
-    db.collection('quizs').doc(props.quizId).collection('questions').where('id','==',props.data).delete()
-    .then(()=>{
-      alert("Xoa thanh cong")
-    })
-    .catch(err=>{
-      alert(err.message)
-    })
+    showConfirmDialog()
   }
 
  
@@ -46,7 +73,7 @@ const QuestionText = (props) => {
 const style = StyleSheet.create({
   question:{
     color: '#2F4F4F',
-    fontSize: 30
+    fontSize: 20
   },
   
 })
