@@ -35,7 +35,7 @@ const AddQuestionScreen = ({navigation}) => {
         })
         .catch(error=>alert(error))
       }else{
-        alert('Vui lòng nhấn dữ để chọn đáp án.')
+        alert('Vui lòng nhấn giữ để chọn đáp án.')
       }
     }
    

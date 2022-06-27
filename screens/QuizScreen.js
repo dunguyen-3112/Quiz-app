@@ -69,7 +69,7 @@ const QuizScreen = ({navigation,route}) => {
                 style={{
                     marginTop: 20, width: '100%', backgroundColor: '#3498db', padding: 20, borderRadius: 5,
                 }}>
-                    <Text style={{fontSize: 20, color: '#FFFFFF', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Send':'Next'}</Text>
+                    <Text style={{fontSize: 20, color: '#fff', textAlign: 'center'}}>{currentQuestionIndex+1===questions.length?'Send':'Next'}</Text>
                 </TouchableOpacity>
        </View>
        <Image
